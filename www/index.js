@@ -22486,19 +22486,46 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
   data: function data() {
     return {
-      sentence: '東京に住んでいます。',
-      hidden: [0, 1, 3],
-      currentCharacter: 0
+      japanese: '東京に住んでいます。',
+      kanjis: [0, 1, 3],
+      furigana: {
+        0: 'とう',
+        1: 'きょう',
+        3: 'す'
+      },
+      index: 0
     };
+  },
+
+  computed: {
+    kanji: function kanji() {
+      return this.japanese.charAt(this.kanjis[this.index]);
+    }
   },
 
   components: {
     'kanji-input': _kanjiInput2.default,
     'sentence': _sentence2.default
+  },
+
+  events: {
+    'finish': function finish() {
+      var _this = this;
+
+      setTimeout(function () {
+        _this.index++;
+
+        if (_this.index === _this.kanjis.length) {
+          setTimeout(function () {
+            _this.index = 0;
+          }, 1000);
+        }
+      }, 200);
+    }
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<p>\n  <sentence v-bind:japanese=\"sentence\" v-bind:hidden=\"hidden\" v-bind:index=\"currentCharacter\"></sentence>\n</p>\n<kanji-input kanji=\"本\"></kanji-input>\n<input type=\"number\" v-model=\"currentCharacter\">\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<p>\n  <sentence v-bind:japanese=\"japanese\" v-bind:kanjis=\"kanjis\" v-bind:furigana=\"furigana\" v-bind:index=\"index\">\n  </sentence>\n</p>\n<kanji-input v-bind:kanji=\"kanji\"></kanji-input>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -22686,30 +22713,36 @@ if (module.hot) {(function () {  module.hot.accept()
   }
 })()}
 },{"../util":15,"d3":1,"frechet":2,"vue":8,"vue-hot-reload-api":6,"vueify-insert-css":9}],13:[function(require,module,exports){
-var __vueify_style__ = require("vueify-insert-css").insert(".sentence {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.sentence__character {\n  margin: 0 1px;\n}\n.sentence__character--hidden {\n  border-bottom: 1px solid #000;\n  color: transparent;\n}\n.sentence__character--active {\n  -webkit-animation: blink-border 0.6s infinite;\n          animation: blink-border 0.6s infinite;\n}\n@-moz-keyframes blink-border {\n  50% {\n    border-color: transparent;\n  }\n}\n@-webkit-keyframes blink-border {\n  50% {\n    border-color: transparent;\n  }\n}\n@-o-keyframes blink-border {\n  50% {\n    border-color: transparent;\n  }\n}\n@keyframes blink-border {\n  50% {\n    border-color: transparent;\n  }\n}\n")
+var __vueify_style__ = require("vueify-insert-css").insert(".sentence__character {\n  display: inline-block;\n  text-align: center;\n}\n.sentence__character__kanji {\n  display: inline-block;\n  border: 1px solid #000;\n  margin: 0 2px;\n  height: 24px;\n  width: 24px;\n}\n.sentence__character__kanji__inner {\n  -webkit-transform: scale(1);\n          transform: scale(1);\n  -webkit-transform-origin: 50% 50%;\n          transform-origin: 50% 50%;\n  -webkit-transition: all 0.2s ease-in-out;\n  transition: all 0.2s ease-in-out;\n}\n.sentence__character__kanji__inner--hidden {\n  -webkit-transform: scale(1.4);\n          transform: scale(1.4);\n  color: transparent;\n}\n.sentence__character__furigana {\n  color: initial;\n  text-align: center;\n}\n")
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = {
-  props: ['japanese', 'hidden', 'index'],
+  props: ['japanese', 'kanjis', 'furigana', 'index'],
 
   computed: {
     characters: function characters() {
       return this.japanese.split('');
     }
+  },
+
+  methods: {
+    isKanji: function isKanji(idx) {
+      return this.kanjis.indexOf(idx) >= 0;
+    }
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"sentence\">\n  <span class=\"sentence__character\" v-bind:class=\"{\n      'sentence__character--hidden': hidden.indexOf($index) > -1 &amp;&amp; $index >= index,\n      'sentence__character--active': index == $index,\n    }\" v-for=\"character in characters\">{{ character }}</span>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"sentence\">\n  <div class=\"sentence__character\" v-for=\"character in characters\">\n      <ruby>\n      <rb class=\"sentence__character__kanji\">\n        <span class=\"sentence__character__kanji__inner\" v-bind:class=\"{\n            'sentence__character__kanji__inner--hidden': isKanji($index) &amp;&amp; this.kanjis.indexOf($index) >= index\n          }\">\n          {{ character }}\n        </span>\n      </rb>\n      <rp>(</rp>\n      <rt class=\"sentence__character__furigana\">{{ furigana[$index] }}</rt><rp>)</rp>\n      </ruby>\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   var id = "/home/andreas/Documents/kanjily/src/components/sentence.vue"
   module.hot.dispose(function () {
-    require("vueify-insert-css").cache[".sentence {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.sentence__character {\n  margin: 0 1px;\n}\n.sentence__character--hidden {\n  border-bottom: 1px solid #000;\n  color: transparent;\n}\n.sentence__character--active {\n  -webkit-animation: blink-border 0.6s infinite;\n          animation: blink-border 0.6s infinite;\n}\n@-moz-keyframes blink-border {\n  50% {\n    border-color: transparent;\n  }\n}\n@-webkit-keyframes blink-border {\n  50% {\n    border-color: transparent;\n  }\n}\n@-o-keyframes blink-border {\n  50% {\n    border-color: transparent;\n  }\n}\n@keyframes blink-border {\n  50% {\n    border-color: transparent;\n  }\n}\n"] = false
+    require("vueify-insert-css").cache[".sentence__character {\n  display: inline-block;\n  text-align: center;\n}\n.sentence__character__kanji {\n  display: inline-block;\n  border: 1px solid #000;\n  margin: 0 2px;\n  height: 24px;\n  width: 24px;\n}\n.sentence__character__kanji__inner {\n  -webkit-transform: scale(1);\n          transform: scale(1);\n  -webkit-transform-origin: 50% 50%;\n          transform-origin: 50% 50%;\n  -webkit-transition: all 0.2s ease-in-out;\n  transition: all 0.2s ease-in-out;\n}\n.sentence__character__kanji__inner--hidden {\n  -webkit-transform: scale(1.4);\n          transform: scale(1.4);\n  color: transparent;\n}\n.sentence__character__furigana {\n  color: initial;\n  text-align: center;\n}\n"] = false
     document.head.removeChild(__vueify_style__)
   })
   if (!module.hot.data) {
