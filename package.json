@@ -4,7 +4,7 @@
   "description": "Kanji game",
   "main": "index.js",
   "scripts": {
-    "dev": "watchify -vd -p browserify-hmr -e src/main.js -o dist/main.js & http-server -c 1 -a localhost",
+    "dev": "watchify -vd -p browserify-hmr -e src/main.js -o dist/main.js & stylus --watch --include-css src/stylus/main.styl -o dist/ & http-server -c 1 -a localhost",
     "lint": "eslint --ext .js,.vue src"
   },
   "browserify": {
@@ -32,6 +32,7 @@
     "eslint": "^2.2.0",
     "eslint-plugin-html": "^1.4.0",
     "frechet": "^1.0.1",
+    "normalize.css": "^3.0.3",
     "simplify-js": "^1.2.1",
     "stylus": "^0.53.0",
     "vue": "^1.0.16",
