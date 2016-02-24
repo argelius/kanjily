@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import VueTouch from 'vue-touch';
-import {Game, Sentence, KanjiInput} from './components';
+import {Game} from './components';
 
-Vue.config.debug = true
+Vue.config.debug = true;
 
 VueTouch.config.pan = {
   threshold: 2
@@ -10,9 +10,10 @@ VueTouch.config.pan = {
 
 Vue.use(VueTouch);
 
+/* eslint-disable no-new */
 new Vue({
   el: '#app',
   components: {
     'game': Game
-  },
+  }
 });

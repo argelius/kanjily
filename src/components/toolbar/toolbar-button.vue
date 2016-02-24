@@ -48,18 +48,5 @@
 
 <script>
   export default {
-    props: ['japanese', 'kanjis', 'furigana', 'index'],
-
-    computed: {
-      characters: function() {
-        return this.japanese.split('');
-      }
-    },
-
-    methods: {
-      isKanji: function(idx) {
-        return this.kanjis.indexOf(idx) >= 0;
-      }
-    }
   };
 </script>

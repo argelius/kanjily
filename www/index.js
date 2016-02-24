@@ -22481,6 +22481,8 @@ var _kanjiInput = require('./kanji-input.vue');
 
 var _kanjiInput2 = _interopRequireDefault(_kanjiInput);
 
+var _toolbar = require('./toolbar');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
@@ -22505,7 +22507,8 @@ exports.default = {
 
   components: {
     'kanji-input': _kanjiInput2.default,
-    'sentence': _sentence2.default
+    'sentence': _sentence2.default,
+    'toolbar': _toolbar.Toolbar
   },
 
   events: {
@@ -22525,7 +22528,7 @@ exports.default = {
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<p>\n  <sentence v-bind:japanese=\"japanese\" v-bind:kanjis=\"kanjis\" v-bind:furigana=\"furigana\" v-bind:index=\"index\">\n  </sentence>\n</p>\n<kanji-input v-bind:kanji=\"kanji\"></kanji-input>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<toolbar></toolbar>\n<p>\n  <sentence v-bind:japanese=\"japanese\" v-bind:kanjis=\"kanjis\" v-bind:furigana=\"furigana\" v-bind:index=\"index\">\n  </sentence>\n</p>\n<kanji-input v-bind:kanji=\"kanji\"></kanji-input>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -22537,7 +22540,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"./kanji-input.vue":12,"./sentence.vue":13,"vue":8,"vue-hot-reload-api":6}],11:[function(require,module,exports){
+},{"./kanji-input.vue":12,"./sentence.vue":13,"./toolbar":14,"vue":8,"vue-hot-reload-api":6}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22712,7 +22715,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"../util":15,"d3":1,"frechet":2,"vue":8,"vue-hot-reload-api":6,"vueify-insert-css":9}],13:[function(require,module,exports){
+},{"../util":17,"d3":1,"frechet":2,"vue":8,"vue-hot-reload-api":6,"vueify-insert-css":9}],13:[function(require,module,exports){
 var __vueify_style__ = require("vueify-insert-css").insert(".sentence__character {\n  display: inline-block;\n  text-align: center;\n}\n.sentence__character__kanji {\n  display: inline-block;\n  border: 1px solid #000;\n  margin: 0 2px;\n  height: 24px;\n  width: 24px;\n}\n.sentence__character__kanji__inner {\n  -webkit-transform: scale(1);\n          transform: scale(1);\n  -webkit-transform-origin: 50% 50%;\n          transform-origin: 50% 50%;\n  -webkit-transition: all 0.2s ease-in-out;\n  transition: all 0.2s ease-in-out;\n}\n.sentence__character__kanji__inner--hidden {\n  -webkit-transform: scale(1.4);\n          transform: scale(1.4);\n  color: transparent;\n}\n.sentence__character__furigana {\n  color: initial;\n  text-align: center;\n}\n")
 'use strict';
 
@@ -22754,6 +22757,47 @@ if (module.hot) {(function () {  module.hot.accept()
 },{"vue":8,"vue-hot-reload-api":6,"vueify-insert-css":9}],14:[function(require,module,exports){
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Toolbar = undefined;
+
+var _toolbar = require('./toolbar.vue');
+
+var _toolbar2 = _interopRequireDefault(_toolbar);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.Toolbar = _toolbar2.default;
+
+},{"./toolbar.vue":15}],15:[function(require,module,exports){
+var __vueify_style__ = require("vueify-insert-css").insert(".toolbar {\n  height: 64px;\n  background-color: #f00;\n}\n")
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"toolbar\">\n</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  var id = "/home/andreas/Documents/kanjily/src/components/toolbar/toolbar.vue"
+  module.hot.dispose(function () {
+    require("vueify-insert-css").cache[".toolbar {\n  height: 64px;\n  background-color: #f00;\n}\n"] = false
+    document.head.removeChild(__vueify_style__)
+  })
+  if (!module.hot.data) {
+    hotAPI.createRecord(id, module.exports)
+  } else {
+    hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"vue":8,"vue-hot-reload-api":6,"vueify-insert-css":9}],16:[function(require,module,exports){
+'use strict';
+
 var _vue = require('vue');
 
 var _vue2 = _interopRequireDefault(_vue);
@@ -22781,7 +22825,7 @@ new _vue2.default({
   }
 });
 
-},{"./components":11,"vue":8,"vue-touch":7}],15:[function(require,module,exports){
+},{"./components":11,"vue":8,"vue-touch":7}],17:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -22873,4 +22917,4 @@ exports.default = {
   parseJapanese: parseJapanese
 };
 
-},{"simplify-js":5}]},{},[14]);
+},{"simplify-js":5}]},{},[16]);

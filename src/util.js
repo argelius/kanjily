@@ -22,7 +22,7 @@ export const fetchKanji = (kanji) => {
       }
     };
 
-    request.open('GET', `/kanji/${charToHex(kanji)}.svg`);
+    request.open('GET', `./kanji/${charToHex(kanji)}.svg`);
     request.send();
   });
 };
@@ -30,7 +30,6 @@ export const fetchKanji = (kanji) => {
 export const parseSvg = (data) => {
   const div = document.createElement('div');
   div.innerHTML = data.svg;
-
 
   const strokes = Array
     .from(div.querySelectorAll(`path[id^="kvg:${charToHex(data.kanji)}-s"]`))
@@ -41,7 +40,7 @@ export const parseSvg = (data) => {
 
 export const simplify = (points, ...args) => {
   points = points.map((p) => {
-    return {x: p[0], y: p[1]}
+    return {x: p[0], y: p[1]};
   });
 
   return simplifyjs(points, ...args)
@@ -49,7 +48,7 @@ export const simplify = (points, ...args) => {
 };
 
 export const samplePath = (d, n) => {
-  const path = document.createElementNS("http://www.w3.org/2000/svg","path");
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
   path.setAttribute('d', d);
 
   const l = path.getTotalLength();

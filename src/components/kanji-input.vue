@@ -79,7 +79,7 @@
       return {
         strokes: [],
         currentStroke: 0
-      }
+      };
     },
 
     ready: function() {
@@ -189,5 +189,5 @@
         }
       }
     }
-  }
+  };
 </script>

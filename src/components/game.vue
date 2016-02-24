@@ -2,6 +2,7 @@
 </style>
 
 <template>
+  <toolbar></toolbar>
   <p>
     <sentence
       v-bind:japanese="japanese"
@@ -16,6 +17,7 @@
 <script>
   import Sentence from './sentence.vue';
   import KanjiInput from './kanji-input.vue';
+  import {Toolbar} from './toolbar';
 
   export default {
     data: function() {
@@ -39,7 +41,8 @@
 
     components: {
       'kanji-input': KanjiInput,
-      'sentence': Sentence
+      'sentence': Sentence,
+      'toolbar': Toolbar
     },
 
     events: {
@@ -53,7 +56,7 @@
             }, 1000);
           }
         }, 200);
-      },
+      }
     }
-  }
+  };
 </script>
