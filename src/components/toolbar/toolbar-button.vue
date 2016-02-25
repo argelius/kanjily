@@ -1,52 +1,60 @@
 <style lang="stylus">
-  .sentence__character
+  @import "global.styl"
+
+  .toolbar__button
     display inline-block
-    text-align center
+    position relative
+    color $toolbar-button-text-color
 
-  .sentence__character__kanji
-    display inline-block
-    border 1px solid black
-    margin 0 2px
-    height 24px
-    width 24px
+    > i
+      vertical-align -5px
 
-  .sentence__character__kanji__inner
-    transform scale(1.0)
-    transform-origin 50% 50%
-    transition all 0.2s ease-in-out
+    ripple()
+      position absolute
+      left 50%
+      top 50%
+      transform translate3d(-50%, -50%, 0)
+      border-radius 50%
+      width 80px
+      height 80px
+      background-color $toolbar-button-ripple-color
 
-  .sentence__character__kanji__inner--hidden
-    transform scale(1.4)
-    color transparent
+    &__ripple-1
+      ripple()
+      visibility hidden
+      opacity 0
+      transition opacity 0.3s linear
 
-  .sentence__character__furigana
-    color initial
-    text-align center
+    :active > &__ripple-1
+      opacity 1.0
+      visibility visible
+      transition opacity 0s linear
+
+    &__ripple-2
+      ripple()
+      transform translate3d(-50%, -50%, 0) scale(0.0)
+      transition transform 0s linear
+
+    :active > &__ripple-2
+      transform translate3d(-50%, -50%, 0) scale(1.0)
+      transition transform 0.5s linear
+      transition-delay 0.3s
+
+  .toolbar__button + .toolbar__button
+    margin-left 16px
+
 </style>
 
 <template>
-  <div class="sentence">
-    <div
-      class="sentence__character"
-      v-for="character in characters">
-        <ruby>
-        <rb class="sentence__character__kanji">
-          <span
-            class="sentence__character__kanji__inner"
-            v-bind:class="{
-              'sentence__character__kanji__inner--hidden': isKanji($index) && this.kanjis.indexOf($index) >= index
-            }">
-            {{ character }}
-          </span>
-        </rb>
-        <rp>(</rp>
-        <rt class="sentence__character__furigana">{{ furigana[$index] }}</rt><rp>)</rp>
-        </ruby>
-      </div>
+  <div class="toolbar__button">
+    <i class="material-icons">{{ icon }}</i>
+    <div class="toolbar__button__ripple-1"></div>
+    <div class="toolbar__button__ripple-2"></div>
   </div>
 </template>
 
 <script>
   export default {
+    props: ['icon']
   };
 </script>

@@ -1,20 +1,26 @@
 <style lang="stylus">
   @import "global.styl"
+  @import "https://fonts.googleapis.com/icon?family=Material+Icons"
 
   .toolbar
-    height 64px
+    display flex
+    flex-wrap nowrap
+    justify-content space-between
+    align-items stretch
+    height $toolbar-height
+    line-height $toolbar-height
     background-color $toolbar-background-color
+    color $toolbar-text-color
+    font-size 20px
+    font-weight 500
+    padding 0 24px
     material-shadow(1)
+    user-select none
 </style>
 
 <template>
   <div class="toolbar">
-    <div class="toolbar__left">
-    <div>
-    <div class="toolbar__center">
-    </div>
-    <div class="toolbar__right">
-    </div>
+    <slot></slot>
   </div>
 </template>
 

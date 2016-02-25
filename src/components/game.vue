@@ -2,7 +2,19 @@
 </style>
 
 <template>
-  <toolbar></toolbar>
+  <toolbar>
+    <toolbar-left>
+      <toolbar-button icon="menu"></toolbar-button>
+    </toolbar-left>
+    <toolbar-center>
+      Kanjily
+    </toolbar-center>
+    <toolbar-right>
+      <toolbar-button icon="favorite"></toolbar-button>
+      <toolbar-button icon="more_vert"></toolbar-button>
+    </toolbar-right>
+  </toolbar>
+
   <p>
     <sentence
       v-bind:japanese="japanese"
@@ -17,7 +29,7 @@
 <script>
   import Sentence from './sentence.vue';
   import KanjiInput from './kanji-input.vue';
-  import {Toolbar} from './toolbar';
+  import {Toolbar, ToolbarLeft, ToolbarCenter, ToolbarRight, ToolbarButton} from './toolbar';
 
   export default {
     data: function() {
@@ -42,7 +54,11 @@
     components: {
       'kanji-input': KanjiInput,
       'sentence': Sentence,
-      'toolbar': Toolbar
+      'toolbar': Toolbar,
+      'toolbar-left': ToolbarLeft,
+      'toolbar-center': ToolbarCenter,
+      'toolbar-right': ToolbarRight,
+      'toolbar-button': ToolbarButton
     },
 
     events: {
