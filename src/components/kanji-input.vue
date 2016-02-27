@@ -39,7 +39,7 @@
   <svg
     class="kanji-input__svg"
     xmlns="http://www.w3.org/2000/svg"
-    width="109" height="109"
+    v-bind:width="size" v-bind:height="size"
     viewBox="0 0 109 109"
     v-touch:panstart="onPanStart($event)"
     v-touch:panend="onPanEnd($event)"
@@ -91,7 +91,20 @@
       }
     },
 
-    props: ['kanji', 'showGuide'],
+    props: {
+      size: {
+        type: Number,
+        default: 109
+      },
+      kanji: {
+        type: String,
+        required: true
+      },
+      showGuide: {
+        type: Boolean,
+        default: false
+      }
+    },
 
     computed: {
       hex: function() {
@@ -116,6 +129,10 @@
     },
 
     methods: {
+      scale: function(coord) {
+        return coord.map((n) => 109 * n / this.size);
+      },
+
       onKanjiChange: function(kanji) {
         return util.fetchKanji(kanji)
           .then(util.parseSvg)
@@ -140,7 +157,7 @@
         this.position = this.$els.svg.getBoundingClientRect();
         const x = e.center.x - this.position.left;
         const y = e.center.y - this.position.top;
-        this.coordinates = [[x, y]];
+        this.coordinates = [this.scale([x, y])];
       },
 
       onPan: function(e) {
@@ -150,7 +167,8 @@
 
         const x = e.center.x - this.position.left;
         const y = e.center.y - this.position.top;
-        this.coordinates.push([x, y]);
+
+        this.coordinates.push(this.scale([x, y]));
         this.coordinates = util.simplify(this.coordinates, 0.3);
         this.coordinates = this.coordinates.slice(-100);
         this.onCoordinateChange();
@@ -163,7 +181,7 @@
 
         const x = e.center.x - this.position.left;
         const y = e.center.y - this.position.top;
-        this.coordinates.push([x, y]);
+        this.coordinates.push(this.scale([x, y]));
 
         this.compare();
         this.coordinates = [];
@@ -185,7 +203,7 @@
           this.$dispatch('success');
         }
         else {
-          this.$dispatch('failure');
+          this.$dispatch('error');
         }
       }
     }

@@ -1,6 +1,5 @@
 <style lang="stylus">
   @import "global.styl"
-  @import "https://fonts.googleapis.com/icon?family=Material+Icons"
 
   .toolbar
     display flex
