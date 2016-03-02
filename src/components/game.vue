@@ -5,7 +5,7 @@
     &__problem
       position absolute
       left 50%
-      transform translate3d(-200%, 0, 0)
+      transform translate3d(100%, 0, 0)
       transition all 0.2s linear
       transition-delay 0.3s
       opacity 0
@@ -16,7 +16,7 @@
 
       &--done
         opacity 0
-        transform translate3d(100%, 0, 0)
+        transform translate3d(-200%, 0, 0)
 </style>
 
 <template>

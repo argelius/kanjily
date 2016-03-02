@@ -203,6 +203,7 @@
           this.$dispatch('success');
         }
         else {
+          window.navigator.vibrate(200);
           this.$dispatch('error');
         }
       }

@@ -13,9 +13,12 @@
     material-shadow(1)
     padding 20px
 
-  .problem__input
-  .problem__word
-    margin 8px 0
+    &__input
+    &__word
+      margin 8px 0
+
+    &__word
+      flex-basis 240px
 
 </style>
 
