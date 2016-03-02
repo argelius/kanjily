@@ -2,52 +2,52 @@
   @import "global.styl"
 
   .game
-    display flex
-    width 600px
-    max-width calc(100% - 16px)
-    box-sizing border-box
-    flex-direction row
-    flex-wrap wrap
-    justify-content space-around
-    margin 10px auto 0 auto
-    material-shadow(1)
-    padding 20px
+    &__problem
+      position absolute
+      left 50%
+      transform translate3d(-200%, 0, 0)
+      transition all 0.2s linear
+      transition-delay 0.3s
+      opacity 0
 
-  .game__input
-  .game__word
-    margin 8px 0
+      &--active
+        opacity 1
+        transform translate3d(-50%, 0, 0)
 
+      &--done
+        opacity 0
+        transform translate3d(100%, 0, 0)
 </style>
 
 <template>
-  <toolbar>
-    <toolbar-left>
-      <toolbar-button icon="menu"></toolbar-button>
-    </toolbar-left>
-    <toolbar-center>
-      Kanjily
-    </toolbar-center>
-    <toolbar-right>
-      <toolbar-button icon="favorite"></toolbar-button>
-      <toolbar-button icon="more_vert"></toolbar-button>
-    </toolbar-right>
-  </toolbar>
-
   <div class="game">
-    <kanji-input v-bind:size="200" class="game__input" v-bind:kanji="kanji" v-bind:show-guide="showGuide"></kanji-input>
-    <word class="game__word" v-bind:data="word" v-bind:index="index"></word>
+    <problem v-for="word in problems"
+             class="game__problem"
+             v-bind:class="{
+               'game__problem--active': $index === this.index,
+               'game__problem--done': $index < this.index
+             }"
+             v-bind:word="word">
+    </problem>
   </div>
 </template>
 
 <script>
-  import KanjiInput from './kanji-input.vue';
-  import Word from './word.vue';
-  import {Toolbar, ToolbarLeft, ToolbarCenter, ToolbarRight, ToolbarButton} from './toolbar';
+  import Problem from './problem.vue';
 
   export default {
     data: function() {
       return {
-        word: {
+        problems: [
+        {
+          japanese: '木',
+          english: 'Tree',
+          test: [0],
+          furigana: {
+            0: 'き'
+          }
+        },
+        {
           japanese: '桜ん坊',
           english: 'Cherry',
           test: [0, 2],
@@ -56,52 +56,40 @@
             2: 'ぼう'
           }
         },
-        index: 0,
-        errors: 0,
-        showGuide: false
+        {
+          japanese: '東京',
+          english: 'Tokyo',
+          test: [0, 1],
+          furigana: {
+            0: 'とう',
+            1: 'きょう'
+          }
+        }],
+        index: 0
       };
     },
 
     computed: {
+      word: function() {
+        return this.problems[this.index];
+      },
       kanji: function() {
-        return this.word.japanese.charAt(this.word.test[this.index]);
+        return this.word.japanese.charAt(this.word.test[this.kanjiIndex]);
       }
     },
 
     methods: {
-      onFinish: function() {
+      onDone: function() {
         this.index++;
-        this.errors = 0;
-        this.showGuide = false;
-      },
-
-      onSuccess: function() {
-        this.errors = 0;
-      },
-
-      onError: function() {
-        this.errors++;
-
-        if (this.errors === 5) {
-          this.showGuide = true;
-        }
       }
     },
 
     events: {
-      'finish': 'onFinish',
-      'error': 'onError',
-      'success': 'onSuccess'
+      'problem-done': 'onDone'
     },
 
     components: {
-      'kanji-input': KanjiInput,
-      'word': Word,
-      'toolbar': Toolbar,
-      'toolbar-left': ToolbarLeft,
-      'toolbar-center': ToolbarCenter,
-      'toolbar-right': ToolbarRight,
-      'toolbar-button': ToolbarButton
+      'problem': Problem
     },
   };
 </script>

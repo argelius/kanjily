@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueTouch from 'vue-touch';
-import {Game} from './components';
+import App from './components/app.vue';
 
 Vue.config.debug = true;
 
@@ -14,6 +14,6 @@ Vue.use(VueTouch);
 new Vue({
   el: '#app',
   components: {
-    'game': Game
+    'app': App
   }
 });
