@@ -14,7 +14,9 @@
 
   <game></game>
 
-  <menu v-bind:is-shown="menuShown">
+  <menu v-bind:is-shown="menuShown"
+        v-bind:position="{top: '8px', right: '8px'}"
+        v-on:hide="menuShown = false">
     <menu-item>About Kanjily</menu-item>
     <menu-item>Help</menu-item>
     <menu-item>Settings</menu-item>
