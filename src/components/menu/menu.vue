@@ -9,6 +9,7 @@
     material-shadow(1)
     padding 8px 0
     transition all 0.1s linear
+    transition-delay 0.02s
     opacity 0
     overflow hidden
     pointer-events none
