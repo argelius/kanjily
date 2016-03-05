@@ -24,7 +24,7 @@
 
 <template>
   <div class="problem">
-    <kanji-input v-bind:size="200" class="problem__input" v-bind:kanji="kanji" v-bind:show-guide="showGuide"></kanji-input>
+    <kanji-input v-bind:size="240" class="problem__input" v-bind:kanji="kanji" v-bind:show-guide="showGuide"></kanji-input>
     <word class="problem__word" v-bind:data="word" v-bind:index="kanjiIndex"></word>
   </div>
 </template>

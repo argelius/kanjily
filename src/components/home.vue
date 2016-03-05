@@ -3,11 +3,11 @@
 
   .home
     &__view
-      transition all 0.4s linear
+      transition all 0.5s ease
 
     .slide-up-enter
     .slide-up-leave
-      transform translate3d(0, 10%, 0)
+      transform translate3d(0, 5%, 0)
       opacity 0
 
 </style>
@@ -24,7 +24,9 @@
         </toolbar-right>
       </toolbar>
 
-      <game></game>
+      <content>
+        <game></game>
+      </content>
 
       <menu v-bind:is-shown="menuShown"
             v-bind:position="{top: '8px', right: '8px'}"
@@ -42,6 +44,7 @@
 
 <script>
   import Game from './game.vue';
+  import Content from './content.vue';
   import {Toolbar, ToolbarCenter, ToolbarRight, ToolbarButton} from './toolbar';
   import {Menu, MenuItem} from './menu';
 
@@ -58,6 +61,7 @@
       'toolbar-center': ToolbarCenter,
       'toolbar-right': ToolbarRight,
       'toolbar-button': ToolbarButton,
+      'content': Content,
       'menu': Menu,
       'menu-item': MenuItem
     }

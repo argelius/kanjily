@@ -40,6 +40,9 @@
     class="kanji-input__svg"
     xmlns="http://www.w3.org/2000/svg"
     v-bind:width="size" v-bind:height="size"
+    v-bind:style="{
+      minWidth: size + 'px'
+    }"
     viewBox="0 0 109 109"
     v-touch:panstart="onPanStart($event)"
     v-touch:panend="onPanEnd($event)"
