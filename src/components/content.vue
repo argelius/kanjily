@@ -3,11 +3,14 @@
 
   .content
     position absolute
-    top $toolbar-height
+    top 0
     left 0
     right 0
     bottom 0
     overflow auto
+
+  .toolbar + .content
+    top $toolbar-height
 </style>
 
 <template>

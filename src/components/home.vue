@@ -31,10 +31,9 @@
       <menu v-bind:is-shown="menuShown"
             v-bind:position="{top: '8px', right: '8px'}"
             v-on:hide="menuShown = false">
-        <menu-item>About Kanjily</menu-item>
-        <menu-item>Help</menu-item>
-        <menu-item v-link="{path: '/settings'}"
-                   v-on:click="menuShown = false">Settings</menu-item>
+        <menu-item v-link="{path: '/about'}" v-on:click="menuShown=false">About Kanjily</menu-item>
+        <menu-item v-link="{path: '/help'}" v-on:click="menuShown=false">Help</menu-item>
+        <menu-item v-link="{path: '/settings'}" v-on:click="menuShown=false">Settings</menu-item>
       </menu>
     </div>
 

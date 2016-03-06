@@ -13,12 +13,22 @@ Vue.use(VueRouter);
 
 const router = new VueRouter();
 
-import Settings from './components/settings.vue';
 import Home from './components/home.vue';
+import Settings from './components/settings.vue';
+import Help from './components/help.vue';
+import About from './components/about.vue';
 
 router.map({
   '/settings': {
     component: Settings
+  },
+
+  '/help': {
+    component: Help
+  },
+
+  '/about': {
+    component: About
   }
 });
 
