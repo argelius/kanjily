@@ -3,6 +3,7 @@
 
   .toolbar__center
     flex-grow 1
+    cursor default
 </style>
 
 <template>

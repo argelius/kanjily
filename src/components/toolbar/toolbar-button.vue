@@ -5,6 +5,7 @@
     display inline-block
     position relative
     color $toolbar-button-text-color
+    cursor pointer
 
     > i
       vertical-align -5px
