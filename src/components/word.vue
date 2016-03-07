@@ -23,6 +23,8 @@
       transition all 0.3s linear
       color inherit
       text-align center
+      user-select none
+      cursor default
 
       &--test
         background-color rgba(0, 0, 0, 0.05)
