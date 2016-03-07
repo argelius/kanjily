@@ -53,10 +53,12 @@
     },
 
     methods: {
-      onFinish: function() {
+      onFinish: function(event) {
         this.kanjiIndex++;
         this.errors = 0;
         this.showGuide = false;
+
+        this.$dispatch('points', event.points);
 
         if (this.kanjiIndex >= this.word.test.length) {
           this.$dispatch('problem-done', {word: this.word});

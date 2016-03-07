@@ -14,11 +14,16 @@ Vue.use(VueRouter);
 const router = new VueRouter();
 
 import Home from './components/home.vue';
+import Game from './components/game.vue';
 import Settings from './components/settings.vue';
 import Help from './components/help.vue';
 import About from './components/about.vue';
 
 router.map({
+  '/game': {
+    component: Game
+  },
+
   '/settings': {
     component: Settings
   },

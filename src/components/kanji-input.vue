@@ -81,7 +81,8 @@
     data: function () {
       return {
         strokes: [],
-        currentStroke: 0
+        currentStroke: 0,
+        errors: 0
       };
     },
 
@@ -126,7 +127,7 @@
 
       currentStroke: function() {
         if (this.finished) {
-          this.$dispatch('finish');
+          this.$dispatch('finish', {points: this.getPoints()});
         }
       }
     },
@@ -143,6 +144,7 @@
             (strokes) => {
               this.strokes = strokes;
               this.currentStroke = 0;
+              this.errors = 0;
               this.coordinates = [];
               this.onCoordinateChange();
             },
@@ -207,8 +209,24 @@
         }
         else {
           window.navigator.vibrate(200);
+          this.errors += 1;
           this.$dispatch('error');
         }
+      },
+
+      getPoints() {
+        const strokes = this.strokes.length;
+        const errors = this.errors;
+        let points = 100 * strokes * Math.exp(-0.6 * errors);
+
+        if (errors === 0) {
+          points *= 4;
+        }
+        else if (errors <= this.strokes) {
+          points *= 2;
+        }
+
+        return 10 * Math.round(points / 10);
       }
     }
   };

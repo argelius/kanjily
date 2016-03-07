@@ -5,8 +5,8 @@
     &__problem
       position absolute
       left 50%
-      transform translate3d(100%, 0, 0)
-      transition all 0.2s linear
+      transform translate3d(50%, 0, 0)
+      transition all 0.4s ease-out
       transition-delay 0.3s
       opacity 0
 
@@ -16,23 +16,37 @@
 
       &--done
         opacity 0
-        transform translate3d(-200%, 0, 0)
+        transform translate3d(-150%, 0, 0)
 </style>
 
 <template>
-  <div class="game">
-    <problem v-for="word in problems"
-             class="game__problem"
-             v-bind:class="{
-               'game__problem--active': $index === this.index,
-               'game__problem--done': $index < this.index
-             }"
-             v-bind:word="word">
-    </problem>
+  <div class="game view">
+    <toolbar>
+      <toolbar-left>
+      <toolbar-button v-link="{path: '/'}" icon="arrow_back"></toolbar-button>
+      </toolbar-left>
+      <toolbar-center>Learn</toolbar-center>
+      <toolbar-right>
+        {{ points }}
+      </toolbar-right>
+    </toolbar>
+
+    <content>
+      <problem v-for="word in problems"
+               class="game__problem"
+               v-bind:class="{
+                 'game__problem--active': $index === this.index,
+                 'game__problem--done': $index < this.index
+               }"
+               v-bind:word="word">
+      </problem>
+    </content>
   </div>
 </template>
 
 <script>
+  import {Toolbar, ToolbarCenter, ToolbarLeft, ToolbarRight, ToolbarButton} from './toolbar';
+  import Content from './content.vue';
   import Problem from './problem.vue';
 
   export default {
@@ -65,7 +79,8 @@
             1: 'きょう'
           }
         }],
-        index: 0
+        index: 0,
+        points: 0
       };
     },
 
@@ -81,15 +96,26 @@
     methods: {
       onDone: function() {
         this.index++;
+      },
+
+      onPoints: function(points) {
+        this.points += points;
       }
     },
 
     events: {
+      'points': 'onPoints',
       'problem-done': 'onDone'
     },
 
     components: {
-      'problem': Problem
+      'toolbar': Toolbar,
+      'toolbar-center': ToolbarCenter,
+      'toolbar-left': ToolbarLeft,
+      'toolbar-right': ToolbarRight,
+      'toolbar-button': ToolbarButton,
+      'problem': Problem,
+      'content': Content
     },
   };
 </script>

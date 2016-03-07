@@ -25,7 +25,7 @@
       </toolbar>
 
       <content>
-        <game></game>
+        <button v-link="{path: '/game'}">Go to Game</button>
       </content>
 
       <menu v-bind:is-shown="menuShown"
