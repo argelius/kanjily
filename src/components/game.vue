@@ -27,7 +27,7 @@
       </toolbar-left>
       <toolbar-center>Learn</toolbar-center>
       <toolbar-right>
-        {{ points }}
+        <points v-bind:value="points"></points>
       </toolbar-right>
     </toolbar>
 
@@ -48,6 +48,7 @@
   import {Toolbar, ToolbarCenter, ToolbarLeft, ToolbarRight, ToolbarButton} from './toolbar';
   import Content from './content.vue';
   import Problem from './problem.vue';
+  import Points from './points.vue';
 
   export default {
     data: function() {
@@ -115,7 +116,8 @@
       'toolbar-right': ToolbarRight,
       'toolbar-button': ToolbarButton,
       'problem': Problem,
-      'content': Content
+      'content': Content,
+      'points': Points
     },
   };
 </script>
