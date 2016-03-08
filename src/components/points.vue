@@ -38,7 +38,6 @@
 
     computed: {
       isActive: function() {
-        console.log(this.show, this.value);
         return this.show < this.value;
       }
     },
