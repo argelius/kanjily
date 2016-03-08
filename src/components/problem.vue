@@ -87,6 +87,6 @@
     components: {
       'kanji-input': KanjiInput,
       'word': Word
-    },
+    }
   };
 </script>

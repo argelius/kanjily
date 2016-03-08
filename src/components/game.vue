@@ -54,32 +54,33 @@
     data: function() {
       return {
         problems: [
-        {
-          japanese: '木',
-          english: 'Tree',
-          test: [0],
-          furigana: {
-            0: 'き'
+          {
+            japanese: '木',
+            english: 'Tree',
+            test: [0],
+            furigana: {
+              0: 'き'
+            }
+          },
+          {
+            japanese: '桜ん坊',
+            english: 'Cherry',
+            test: [0, 2],
+            furigana: {
+              0: 'さくら',
+              2: 'ぼう'
+            }
+          },
+          {
+            japanese: '東京',
+            english: 'Tokyo',
+            test: [0, 1],
+            furigana: {
+              0: 'とう',
+              1: 'きょう'
+            }
           }
-        },
-        {
-          japanese: '桜ん坊',
-          english: 'Cherry',
-          test: [0, 2],
-          furigana: {
-            0: 'さくら',
-            2: 'ぼう'
-          }
-        },
-        {
-          japanese: '東京',
-          english: 'Tokyo',
-          test: [0, 1],
-          furigana: {
-            0: 'とう',
-            1: 'きょう'
-          }
-        }],
+        ],
         index: 0,
         points: 0
       };
@@ -118,6 +119,6 @@
       'problem': Problem,
       'content': Content,
       'points': Points
-    },
+    }
   };
 </script>
