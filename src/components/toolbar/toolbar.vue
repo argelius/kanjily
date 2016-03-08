@@ -15,9 +15,6 @@
     padding 0 24px
     material-shadow(1)
     user-select none
-    position absolute
-    left 0
-    right 0
 </style>
 
 <template>

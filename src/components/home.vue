@@ -23,6 +23,10 @@
           <toolbar-button icon="more_vert" v-on:click="menuShown = true"></toolbar-button>
         </toolbar-right>
       </toolbar>
+      <tabs>
+        <tab>Home</tab>
+        <tab>Courses</tab>
+      </tabs>
 
       <content>
         <button v-link="{path: '/game'}">Go to Game</button>
@@ -45,6 +49,7 @@
   import Game from './game.vue';
   import Content from './content.vue';
   import {Toolbar, ToolbarCenter, ToolbarRight, ToolbarButton} from './toolbar';
+  import {Tabs, Tab} from './tabs';
   import {Menu, MenuItem} from './menu';
 
   export default {
@@ -60,6 +65,8 @@
       'toolbar-center': ToolbarCenter,
       'toolbar-right': ToolbarRight,
       'toolbar-button': ToolbarButton,
+      'tabs': Tabs,
+      'tab': Tab,
       'content': Content,
       'menu': Menu,
       'menu-item': MenuItem

@@ -11,6 +11,12 @@
 
   .toolbar + .content
     top $toolbar-height
+
+  .toolbar + .tabs + .content
+    top $toolbar-height + $tabs-height
+
+  .tabs + .content
+    top $tabs-height
 </style>
 
 <template>
