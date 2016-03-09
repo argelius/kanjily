@@ -13,7 +13,6 @@
     font-size 20px
     font-weight 500
     padding 0 24px
-    material-shadow(1)
     user-select none
 </style>
 
