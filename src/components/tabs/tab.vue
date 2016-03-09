@@ -7,6 +7,8 @@
     text-transform uppercase
     flex-grow 1
     text-align center
+    user-select none
+    cursor pointer
 
     @media (min-width: 480px)
       flex-grow 0
