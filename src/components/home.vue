@@ -23,9 +23,10 @@
           <toolbar-button icon="more_vert" v-on:click="menuShown = true"></toolbar-button>
         </toolbar-right>
       </toolbar>
-      <tabs>
-        <tab>Home</tab>
-        <tab>Courses</tab>
+      <tabs v-bind:active-index="tabIndex">
+        <tab v-on:click="tabIndex = 0">Home</tab>
+        <tab v-on:click="tabIndex = 1">Courses</tab>
+        <tab v-on:click="tabIndex = 2">Test</tab>
       </tabs>
 
       <content>
@@ -55,7 +56,8 @@
   export default {
     data: function() {
       return {
-        menuShown: false
+        menuShown: false,
+        tabIndex: 1
       };
     },
 

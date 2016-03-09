@@ -5,6 +5,12 @@
     line-height $tabs-height
     color $tabs-text-color
     text-transform uppercase
+    flex-grow 1
+    text-align center
+
+    @media (min-width: 480px)
+      flex-grow 0
+      padding 0 24px
 </style>
 
 <template>
