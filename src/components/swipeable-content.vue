@@ -44,7 +44,7 @@
     data: function() {
       return {
         translation: 0
-      }
+      };
     },
 
     props: {

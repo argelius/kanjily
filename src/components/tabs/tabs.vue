@@ -31,7 +31,7 @@
     return val;
   };
 
-  interpolate = (a, b, r) => (
+  const interpolate = (a, b, r) => (
     a * (1 - r) + b * r
   );
 
