@@ -33,6 +33,7 @@
     "eslint-plugin-html": "^1.4.0",
     "frechet": "^1.0.1",
     "normalize.css": "^4.1.1",
+    "raf": "^3.2.0",
     "simplify-js": "^1.2.1",
     "stylus": "^0.54.5",
     "vue": "^1.0.24",

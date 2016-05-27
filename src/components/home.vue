@@ -23,15 +23,19 @@
           <toolbar-button icon="more_vert" v-on:click="menuShown = true"></toolbar-button>
         </toolbar-right>
       </toolbar>
-      <tabs v-bind:active-index="tabIndex">
-        <tab v-on:click="tabIndex = 0">Home</tab>
-        <tab v-on:click="tabIndex = 1">Courses</tab>
-        <tab v-on:click="tabIndex = 2">Test</tab>
+      <tabs v-bind:index="tabIndex">
+        <tab v-on:click="index = 0">Home</tab>
+        <tab v-on:click="index = 1">Courses</tab>
+        <tab v-on:click="index = 2">Test</tab>
       </tabs>
 
-      <content>
-        <button v-link="{path: '/game'}">Go to Game</button>
-      </content>
+      <swipeable-content v-bind:index="index" v-on:change="handleChange" v-on:translation="handleTranslation">
+        <div>
+          <button v-link="{path: '/game'}">Play a game!</button>
+        </div>
+        <div>B</div>
+        <div>C</div>
+      </swipeable-content>
 
       <menu v-bind:is-shown="menuShown"
             v-bind:position="{top: '8px', right: '8px'}"
@@ -49,6 +53,7 @@
 <script>
   import Game from './game.vue';
   import Content from './content.vue';
+  import SwipeableContent from './swipeable-content.vue';
   import {Toolbar, ToolbarCenter, ToolbarRight, ToolbarButton} from './toolbar';
   import {Tabs, Tab} from './tabs';
   import {Menu, MenuItem} from './menu';
@@ -57,8 +62,18 @@
     data: function() {
       return {
         menuShown: false,
+        index: 1,
         tabIndex: 1
       };
+    },
+
+    methods: {
+      handleChange: function(e) {
+        this.tabIndex = e.index;
+      },
+      handleTranslation: function(e) {
+        this.tabIndex = e.translation / e.itemWidth;
+      }
     },
 
     components: {
@@ -70,6 +85,7 @@
       'tabs': Tabs,
       'tab': Tab,
       'content': Content,
+      'swipeable-content': SwipeableContent,
       'menu': Menu,
       'menu-item': MenuItem
     }

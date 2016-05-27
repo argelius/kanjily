@@ -12,7 +12,6 @@
       position absolute
       height 2px
       margin-top $tabs-height - 2
-      transition all 0.2s linear
 </style>
 
 <template>
@@ -26,25 +25,35 @@
 </template>
 
 <script>
+  const between = (val, low, high) => {
+    val = Math.max(val, low);
+    val = Math.min(val, high);
+    return val;
+  };
+
+  interpolate = (a, b, r) => (
+    a * (1 - r) + b * r
+  );
+
   export default {
     data: function() {
       return {
         position: {
           left: 0,
-          width: 0
+          width: 100
         }
       };
     },
 
     props: {
-      activeIndex: {
+      index: {
         type: Number,
         default: 0
       }
     },
 
     watch: {
-      activeIndex: function() {
+      index: function() {
         this.updateBar();
       }
     },
@@ -60,12 +69,18 @@
 
     methods: {
       updateBar: function() {
-        const tabElement = this.$children[this.activeIndex].$el;
-        const rect = tabElement.getBoundingClientRect();
+        let a = Math.floor(this.index);
+        let b = Math.ceil(this.index);
+
+        a = between(a, 0, this.$children.length - 1);
+        b = between(b, 0, this.$children.length - 1);
+
+        const rectA = this.$children[a].$el.getBoundingClientRect();
+        const rectB = this.$children[b].$el.getBoundingClientRect();
 
         this.position = {
-          left: rect.left,
-          width: rect.width
+          left: interpolate(rectA.left, rectB.left, this.index % 1),
+          width: interpolate(rectA.width, rectB.width, this.index % 1)
         };
       }
     }
