@@ -152,12 +152,16 @@
       },
 
       onPan: function(e) {
+        let deltaX = e.deltaX;
+
         // Fixes bug where "panstart" is not triggered sometimes on Chrome.
-        if (typeof this.originalTranslation === 'undefined') {
-          this.originalTranslation = this.translation;
+        if (this.prevPanEvent && e.deltaTime > this.prevPanEvent.deltaTime) {
+          deltaX = e.deltaX - this.prevPanEvent.deltaX;
         }
 
-        this.translation = this.originalTranslation + e.deltaX;
+        this.prevPanEvent = e;
+
+        this.translation = this.translation + deltaX;
       }
     }
   };
