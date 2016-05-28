@@ -104,7 +104,7 @@
       animateTo: function(target) {
         raf.cancel(this.animationHandle);
 
-        const step = (target - this.translation) / 16;
+        const step = (target - this.translation) / 10;
 
         return new Promise((resolve) => {
           (function bounce() {
@@ -135,7 +135,8 @@
       },
 
       onResize: function() {
-        this.translation = this.getItemWidth() * this.translation / this.previousItemWidth;
+        raf.cancel(this.animationHandle);
+        this.translation = this.getItemWidth() * Math.round(this.translation / this.previousItemWidth);
         this.previousItemWidth = this.getItemWidth();
       },
 
@@ -154,7 +155,7 @@
       onPan: function(e) {
         let deltaX = e.deltaX;
 
-        // Fixes bug where "panstart" is not triggered sometimes on Chrome.
+        // Fixes bug where "panstart" is not triggered sometimes in Chrome.
         if (this.prevPanEvent && e.deltaTime > this.prevPanEvent.deltaTime) {
           deltaX = e.deltaX - this.prevPanEvent.deltaX;
         }
