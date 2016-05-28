@@ -71,6 +71,7 @@
       handleChange: function(e) {
         this.tabIndex = e.index;
       },
+
       handleTranslation: function(e) {
         this.tabIndex = e.translation / e.itemWidth;
       }

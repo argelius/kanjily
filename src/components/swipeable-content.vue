@@ -55,13 +55,14 @@
     },
 
     ready: function() {
-      this.translation = -this.getItemWidth() + this.index;
+      this.translation = -this.getItemWidth() * this.index;
+      this.previousItemWidth = this.getItemWidth();
 
-      window.addEventListener('resize', this.normalize);
+      window.addEventListener('resize', this.onResize);
     },
 
     beforeDestroy: function() {
-      window.removeEventListener('resize', this.normalize);
+      window.removeEventListener('resize', this.onResize);
     },
 
     watch: {
@@ -92,6 +93,7 @@
       onPanStart: function() {
         raf.cancel(this.animationHandle);
         this.originalTranslation = this.translation;
+        console.log('start');
       },
 
       setIndex: function(index) {
@@ -133,8 +135,9 @@
         return target;
       },
 
-      normalize: function() {
-        this.translation = this.getClosestBorder();
+      onResize: function() {
+        this.translation = this.getItemWidth() * this.translation / this.previousItemWidth;
+        this.previousItemWidth = this.getItemWidth();
       },
 
       onPanEnd: function() {
@@ -150,6 +153,11 @@
       },
 
       onPan: function(e) {
+        // Fixes bug where "panstart" is not triggered sometimes on Chrome.
+        if (typeof this.originalTranslation === 'undefined') {
+          this.originalTranslation = this.translation;
+        }
+
         this.translation = this.originalTranslation + e.deltaX;
       }
     }
