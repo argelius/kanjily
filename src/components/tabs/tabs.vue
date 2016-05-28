@@ -25,11 +25,9 @@
 </template>
 
 <script>
-  const between = (val, low, high) => {
-    val = Math.max(val, low);
-    val = Math.min(val, high);
-    return val;
-  };
+  const between = (val, low, high) => (
+    Math.min(high, Math.max(low, val))
+  );
 
   const interpolate = (a, b, r) => (
     a * (1 - r) + b * r
@@ -40,7 +38,7 @@
       return {
         position: {
           left: 0,
-          width: 100
+          width: 0
         }
       };
     },
@@ -53,9 +51,7 @@
     },
 
     watch: {
-      index: function() {
-        this.updateBar();
-      }
+      index: 'updateBar'
     },
 
     ready: function() {
