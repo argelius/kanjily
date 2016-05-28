@@ -34,7 +34,7 @@
     v-touch:pancancel="onPanEnd()"
     v-touch:pan="onPan($event)"
     v-touch:swipe="onSwipe($event)"
-    v-touch-options:swipe="{threshold: 100}"
+    v-touch-options:swipe="{threshold: 50}"
     >
     <slot></slot>
   </div>
