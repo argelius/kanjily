@@ -93,7 +93,6 @@
       onPanStart: function() {
         raf.cancel(this.animationHandle);
         this.originalTranslation = this.translation;
-        console.log('start');
       },
 
       setIndex: function(index) {
