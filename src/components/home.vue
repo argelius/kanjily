@@ -29,7 +29,7 @@
         <tab v-on:click="index = 2">Test</tab>
       </tabs>
 
-      <swipeable-content v-bind:index="index" v-on:change="handleChange" v-on:translation="handleTranslation">
+      <swipeable-content v-bind:index="index" v-on:translation="handleTranslation">
         <div>
           <button v-link="{path: '/game'}">Play a game!</button>
         </div>
@@ -68,10 +68,6 @@
     },
 
     methods: {
-      handleChange: function(e) {
-        this.tabIndex = e.index;
-      },
-
       handleTranslation: function(e) {
         this.tabIndex = e.translation / e.itemWidth;
       }

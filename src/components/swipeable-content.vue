@@ -32,13 +32,19 @@
     v-touch:panstart="onPanStart()"
     v-touch:panend="onPanEnd()"
     v-touch:pancancel="onPanEnd()"
-    v-touch:pan="onPan($event)">
+    v-touch:pan="onPan($event)"
+    v-touch:swipe="onSwipe($event)"
+    v-touch-options:swipe="{threshold: 100}"
+    >
     <slot></slot>
   </div>
 </template>
 
 <script>
   import raf from 'raf';
+
+  const DIRECTION_LEFT = 2;
+  const DIRECTION_RIGHT = 4;
 
   export default {
     data: function() {
@@ -55,8 +61,8 @@
     },
 
     ready: function() {
-      this.translation = -this.getItemWidth() * this.index;
-      this.previousItemWidth = this.getItemWidth();
+      this.itemWidth = this.calculateItemWidth();
+      this.translation = -this.itemWidth * this.index;
 
       window.addEventListener('resize', this.onResize);
     },
@@ -73,7 +79,7 @@
       translation: function() {
         this.$dispatch('translation', {
           translation: -this.translation,
-          itemWidth: this.getItemWidth(),
+          itemWidth: this.itemWidth,
           nbrOfItems: this.nbrOfItems
         });
       }
@@ -86,70 +92,81 @@
     },
 
     methods: {
-      getItemWidth: function() {
+      calculateItemWidth: function() {
         return this.$el.children[0].offsetWidth;
       },
 
       onPanStart: function() {
-        raf.cancel(this.animationHandle);
+        this.cancelAnimation();
         this.originalTranslation = this.translation;
       },
 
       setIndex: function(index) {
-        const target = -this.getItemWidth() * index;
+        const target = -this.itemWidth * index;
 
         this.animateTo(target);
       },
 
       animateTo: function(target) {
-        raf.cancel(this.animationHandle);
+        this.cancelAnimation();
 
         const step = (target - this.translation) / 10;
 
-        return new Promise((resolve) => {
-          (function bounce() {
-            if (step > 0) {
-              this.translation = Math.min(target, this.translation + step);
-            }
-            else {
-              this.translation = Math.max(target, this.translation + step);
-            }
+        (function bounce() {
+          if (step > 0) {
+            this.translation = Math.min(target, this.translation + step);
+          }
+          else {
+            this.translation = Math.max(target, this.translation + step);
+          }
 
-            if (target === this.translation) {
-              return resolve();
-            }
+          if (target === this.translation) {
+            return;
+          }
 
-            this.animationHandle = raf(bounce.bind(this));
-          }.bind(this))();
-        });
+          this.animationHandle = raf(bounce.bind(this));
+        }.bind(this))();
       },
 
-      getClosestBorder: function() {
-        let target = this.getItemWidth() * Math.round(this.translation / this.getItemWidth());;
+      cancelAnimation: function() {
+        raf.cancel(this.animationHandle);
+      },
 
+      normalize: function(target) {
         // Bounce back if swiped outside.
         target = Math.min(0, target);
-        target = Math.max(target, (1 - this.nbrOfItems) * this.getItemWidth());
+        target = Math.max(target, (1 - this.nbrOfItems) * this.itemWidth);
 
         return target;
       },
 
+      getClosestBorder: function() {
+        let target = this.itemWidth * Math.round(this.translation / this.itemWidth);
+        return this.normalize(target);
+      },
+
+      getPreviousBorder: function() {
+        let target = this.itemWidth * Math.floor(this.translation / this.itemWidth);
+        return this.normalize(target);
+
+      },
+
+      getNextBorder: function() {
+        let target = this.itemWidth * Math.ceil(this.translation / this.itemWidth);
+        return this.normalize(target);
+      },
+
       onResize: function() {
-        raf.cancel(this.animationHandle);
-        this.translation = this.getItemWidth() * Math.round(this.translation / this.previousItemWidth);
-        this.previousItemWidth = this.getItemWidth();
+        this.cancelAnimation();
+        const newItemWidth = this.calculateItemWidth();
+        this.translation = newItemWidth * Math.round(this.translation / this.itemWidth);
+        this.itemWidth = newItemWidth;
       },
 
       onPanEnd: function() {
         let target = this.getClosestBorder();
 
-        this.animateTo(target).then(
-          () => {
-            this.$dispatch('change', {
-              index: -target / this.getItemWidth()
-            });
-          }
-        );
+        this.animateTo(target);
       },
 
       onPan: function(e) {
@@ -163,6 +180,22 @@
         this.prevPanEvent = e;
 
         this.translation = this.translation + deltaX;
+      },
+
+      onSwipe: function(e) {
+        let target;
+
+        if (e.direction === DIRECTION_LEFT) {
+          target = this.getPreviousBorder();
+        }
+        else if (e.direction === DIRECTION_RIGHT) {
+          target = this.getNextBorder();
+        }
+        else {
+          return;
+        }
+
+        this.animateTo(target);
       }
     }
   };

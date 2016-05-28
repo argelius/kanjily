@@ -55,15 +55,25 @@
     },
 
     ready: function() {
+      this.rects = this.calculateRects();
       this.updateBar();
-      window.addEventListener('resize', this.updateBar);
+      window.addEventListener('resize', this.onResize);
     },
 
     beforeDestroy: function() {
-      window.removeEventListener('resize', this.updateBar);
+      window.removeEventListener('resize', this.onResize);
     },
 
     methods: {
+      onResize: function() {
+        this.rects = this.calculateRects();
+        this.updateBar();
+      },
+
+      calculateRects: function() {
+        return this.$children.map((child) => child.$el.getBoundingClientRect());
+      },
+
       updateBar: function() {
         let a = Math.floor(this.index);
         let b = Math.ceil(this.index);
@@ -71,12 +81,9 @@
         a = between(a, 0, this.$children.length - 1);
         b = between(b, 0, this.$children.length - 1);
 
-        const rectA = this.$children[a].$el.getBoundingClientRect();
-        const rectB = this.$children[b].$el.getBoundingClientRect();
-
         this.position = {
-          left: interpolate(rectA.left, rectB.left, this.index % 1),
-          width: interpolate(rectA.width, rectB.width, this.index % 1)
+          left: interpolate(this.rects[a].left, this.rects[b].left, this.index % 1),
+          width: interpolate(this.rects[a].width, this.rects[b].width, this.index % 1)
         };
       }
     }
