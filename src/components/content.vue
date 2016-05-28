@@ -7,7 +7,8 @@
     left 0
     right 0
     bottom 0
-    overflow auto
+    overflow-y auto
+    overflow-x hidden
 
   .toolbar + .content
     top $toolbar-height
